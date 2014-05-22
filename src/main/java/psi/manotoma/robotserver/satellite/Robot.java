@@ -44,7 +44,7 @@ public class Robot {
         if (StringUtils.isEmpty(password)) {
             throw new IllegalArgumentException("Password cannot be empty or null");
         }
-        if (!Validator.validatePassword(name, password)) {
+        if (!Validator.isValidPassword(name, password)) {
             throw new InvalidUsernameOrPasswordException(String.format("Password [%s] for [%s] is invalid", password, this));
         }
         this.password = password;

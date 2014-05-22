@@ -13,7 +13,7 @@ public class Validator {
 
     private static final Logger LOG = LoggerFactory.getLogger(Validator.class);
 
-    public static boolean validatePassword(String name, String password) {
+    public static boolean isValidPassword(String name, String password) {
         int sum = getBytesSum(name);
         LOG.debug("Validating pass {} against sum of asciiBytes {}", password, sum);
         if (sum != Integer.parseInt(password)) {
@@ -22,7 +22,7 @@ public class Validator {
         return true;
     }
 
-    public static boolean validateChecksum(Photo photo) {
+    public static boolean isValidChecksum(Photo photo) {
         String hex = formatChecksum(computeChecksum(photo));
         return hex.equals(photo.getChecksum()) ? true : false;
 
@@ -43,15 +43,10 @@ public class Validator {
         for (int i = 0; i < requiredSize; i++) {
             sb.insert(i, "0");
         }
-        for (int i = 0; i < 14; i = i + 4) {
-            sb.insert(i, "\\x");
-        }
+//        for (int i = 0; i < 14; i = i + 4) {
+//            sb.insert(i, "\\x");
+//        }
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        boolean validateChecksum = validateChecksum(new Photo(""));
-        System.out.println("RES: "+validateChecksum);
     }
 
     private static String computeChecksum(Photo photo) {

@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import psi.manotoma.robotserver.exception.UnknownCommandException;
 import psi.manotoma.robotserver.satellite.SatelliteController;
-import psi.manotoma.robotserver.robot.Status;
 import psi.manotoma.robotserver.server.support.sender.RobotResponseSender;
 
 public class RobotProtocolTemplate extends ProtocolTemplate<RobotRequest, RobotResponse> {
@@ -31,22 +30,14 @@ public class RobotProtocolTemplate extends ProtocolTemplate<RobotRequest, RobotR
 
     @Override
     public RobotResponse serve(RobotRequest req) {
-//        if (req.getCommand().equals(RobotRequest.Command.KROK)) {
-//            SatelliteController.step(robot, ctx);
-//            return RobotMsgsFactory.createResponse(Status._240, robot);
-//        }
-//        if (req.getCommand().equals(RobotRequest.Command.VLEVO)) {
-//            SatelliteController.turnLeft(robot, ctx);
-//            return RobotMsgsFactory.createResponse(Status._240, robot);
-//        }
-//        if (req.getCommand().equals(RobotRequest.Command.OPRAVIT)) {
-//            SatelliteController.repair(robot, req.getnProc(), ctx);
-//            return RobotMsgsFactory.createResponse(Status._240, robot);
-//        }
-//        if (req.getCommand().equals(RobotRequest.Command.ZVEDNI)) {
-//            SatelliteController.pickup(robot, ctx);
-//            return RobotMsgsFactory.createResponseSecretFound(Status._260, robot, ctx);
-//        }
+        if (req.getCommand().equals(RobotRequest.Command.INFO)) {
+            SatelliteController.acceptInfoMsg(req, robot);
+            return RobotMsgsFactory.createOKResponse(robot);
+        }
+        if (req.getCommand().equals(RobotRequest.Command.FOTO)) {
+            SatelliteController.acceptPhoto(req, robot);
+            return RobotMsgsFactory.createOKResponse(robot);
+        }
         throw new UnknownCommandException(String.format("Unknown command [%s]", req.getCommand()));
     }
 

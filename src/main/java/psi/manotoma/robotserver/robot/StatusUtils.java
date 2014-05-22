@@ -15,7 +15,7 @@ public class StatusUtils {
     }
 
     public static boolean isCloseConnection(Status status) {
-        return !status.isSameAs(Status._500, Status._501, Status._502);
+        return status.isSameAs(Status._500, Status._501, Status._502);
     }
 
 }

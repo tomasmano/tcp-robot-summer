@@ -8,6 +8,7 @@ import psi.manotoma.robotserver.server.support.sender.RobotResponseSender;
 import java.io.OutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import psi.manotoma.robotserver.exception.InvalidChecksumException;
 import psi.manotoma.robotserver.exception.InvalidUsernameOrPasswordException;
 import psi.manotoma.robotserver.exception.TerminatedConnectionException;
 import psi.manotoma.robotserver.exception.UnknownCommandException;
@@ -33,27 +34,6 @@ public class RobotExceptionVisitor {
         RobotResponseSender.getInstance().send(res, os);
         return res;
     }
-//
-//    public RobotResponse handle(NoSecretException ex, OutputStream os) {
-//        LOG.debug("{}, creating 550 response...", ex.getMessage());
-//        RobotResponse res = RobotMsgsFactory.createErrorResponse(Status._550);
-//        RobotResponseSender.getInstance().send(res, os);
-//        return res;
-//    }
-//
-//    public RobotResponse handle(OutOfCoordinatesException ex, OutputStream os) {
-//        LOG.debug("{}, creating 530 response...", ex.getMessage());
-//        RobotResponse res = RobotMsgsFactory.createErrorResponse(Status._530);
-//        RobotResponseSender.getInstance().send(res, os);
-//        return res;
-//    }
-//
-//    public RobotResponse handle(RobotBrokenProcessorException ex, OutputStream os) {
-//        LOG.debug("{}, creating 572 response...", ex.getMessage());
-//        RobotResponse res = RobotMsgsFactory.createErrorResponse(Status._572);
-//        RobotResponseSender.getInstance().send(res, os);
-//        return res;
-//    }
 
     public RobotResponse handle(InvalidUsernameOrPasswordException ex, OutputStream os) {
         LOG.debug("{}, creating 500 response...", ex.getMessage());
@@ -62,12 +42,12 @@ public class RobotExceptionVisitor {
         return res;
     }
 
-//    public RobotResponse handle(ProcessorFailureException ex, OutputStream os) {
-//        LOG.debug("{}, creating 580 response...", ex.getMessage());
-//        RobotResponse res = RobotMsgsFactory.createErrorResponse(Status._580, ex.getnProc());
-//        RobotResponseSender.getInstance().send(res, os);
-//        return res;
-//    }
+    public RobotResponse handle(InvalidChecksumException ex, OutputStream os) {
+        LOG.debug("{}, creating 300 response...", ex.getMessage());
+        RobotResponse res = RobotMsgsFactory.createErrorResponse(Status._300);
+        RobotResponseSender.getInstance().send(res, os);
+        return res;
+    }
 
     public RobotResponse handle(TerminatedConnectionException ex, OutputStream os) {
         LOG.debug("{}, creating 502 response...", ex.getMessage());

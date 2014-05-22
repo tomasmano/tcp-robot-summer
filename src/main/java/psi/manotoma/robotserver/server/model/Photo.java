@@ -12,15 +12,12 @@ public class Photo {
     private String checksum;
     private int size;
 
-    public Photo(String asciiBytes) {
+    public Photo(String asciiBytes, String checksum, int size) {
         this.asciiBytes = asciiBytes;
-    }
-
-    public Photo(String asciiBytes, int size) {
-        this.asciiBytes = asciiBytes;
+        this.checksum = checksum;
         this.size = size;
     }
-
+    
     public byte[] getAsciiBytes() {
         return asciiBytes.getBytes(Charsets.US_ASCII);
     }
@@ -37,9 +34,14 @@ public class Photo {
         return size;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Photo{" + "checksum=" + checksum + ", size=" + size + '}';
+//    }
+
     @Override
     public String toString() {
-        return "Photo{" + "checksum=" + checksum + ", size=" + size + '}';
+        return "Photo{" + "asciiBytes=" + asciiBytes + ", checksum=" + checksum + ", size=" + size + '}';
     }
     
 }
